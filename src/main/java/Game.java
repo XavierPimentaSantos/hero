@@ -11,8 +11,7 @@ import java.io.IOException;
 
 public class Game {
     Screen screen;
-    int x = 10;
-    int y = 10;
+    Hero hero = new Hero(10, 10);
     public Game(){
         try {
             TerminalSize terminalSize = new TerminalSize(40, 20);
@@ -29,23 +28,23 @@ public class Game {
     }
     private void draw() throws IOException{
         screen.clear();
-        screen.setCharacter(x, y, TextCharacter.fromCharacter('X')[0]);
+        hero.draw(screen);
         screen.refresh();
     }
 
     private void processKey(com.googlecode.lanterna.input.KeyStroke key){
         switch (key.getKeyType()) {
             case ArrowDown:
-                y += 1;
+                hero.moveDOWN();
                 break;
             case ArrowUp:
-                y -= 1;
+                hero.moveUP();
                 break;
             case ArrowLeft:
-                x -= 1;
+                hero.moveLEFT();
                 break;
             case ArrowRight:
-                x += 1;
+                hero.moveRIGHT();
                 break;
         }
     }
