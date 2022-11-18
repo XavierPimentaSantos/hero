@@ -35,16 +35,16 @@ public class Game {
     private void processKey(com.googlecode.lanterna.input.KeyStroke key){
         switch (key.getKeyType()) {
             case ArrowDown:
-                hero.moveDOWN();
+                moveHero(hero.moveDown());
                 break;
             case ArrowUp:
-                hero.moveUP();
+                moveHero(hero.moveUp());
                 break;
             case ArrowLeft:
-                hero.moveLEFT();
+                moveHero(hero.moveLeft());
                 break;
             case ArrowRight:
-                hero.moveRIGHT();
+                moveHero(hero.moveRight());
                 break;
         }
     }
@@ -62,5 +62,9 @@ public class Game {
                 processKey(key);
             }
         }
+    }
+
+    private void moveHero(Position pos){
+        hero.setPosition(pos);
     }
 }
