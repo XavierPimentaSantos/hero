@@ -11,10 +11,12 @@ import java.io.IOException;
 
 public class Game {
     Screen screen;
-    Hero hero = new Hero(10, 10);
+
+    Arena arena = new Arena(20, 40);
+
     public Game(){
         try {
-            TerminalSize terminalSize = new TerminalSize(40, 20);
+            TerminalSize terminalSize = new TerminalSize(arena.getWidth(), arena.getHeight());
             DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
             Terminal terminal = terminalFactory.createTerminal();
             screen = new TerminalScreen(terminal);
@@ -28,26 +30,11 @@ public class Game {
     }
     private void draw() throws IOException{
         screen.clear();
-        hero.draw(screen);
+        arena.getHero().draw(screen);
         screen.refresh();
     }
 
-    private void processKey(com.googlecode.lanterna.input.KeyStroke key){
-        switch (key.getKeyType()) {
-            case ArrowDown:
-                moveHero(hero.moveDown());
-                break;
-            case ArrowUp:
-                moveHero(hero.moveUp());
-                break;
-            case ArrowLeft:
-                moveHero(hero.moveLeft());
-                break;
-            case ArrowRight:
-                moveHero(hero.moveRight());
-                break;
-        }
-    }
+
     public void run() throws IOException{
         while(true){
             draw();
@@ -59,12 +46,10 @@ public class Game {
                 break;
             }
             else{
-                processKey(key);
+                arena.processKey(key);
             }
         }
     }
 
-    private void moveHero(Position pos){
-        hero.setPosition(pos);
-    }
+
 }
